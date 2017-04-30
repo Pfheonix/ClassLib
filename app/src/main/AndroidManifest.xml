@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FindBooks"></activity>
+        <activity android:name=".FindBooks" />
+        <activity android:name=".AddBook" />
+        <activity android:name=".CheckOutBook" />
+        <activity android:name=".CheckedOutBooks"></activity>
     </application>
 
 </manifest>
