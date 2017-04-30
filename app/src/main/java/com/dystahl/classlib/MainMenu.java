@@ -1,9 +1,11 @@
 package com.dystahl.classlib;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -33,13 +35,25 @@ public class MainMenu extends AppCompatActivity {
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS CHECKOUT( ISBN INT NOT NULL, ID INT NOT NULL, PRIMARY KEY (ISBN, ID)," +
                 "FOREIGN KEY(ISBN) REFERENCES BOOK, FOREIGN KEY(ID) REFERENCES STUDENT)");
 
-        Cursor resultSet = libraryDB.rawQuery("SELECT * FROM BOOK", null);
+    }
 
-        resultSet.moveToFirst();
+    public void changeToFindBooks(View view){
+        Intent toFindBook = new Intent(this, FindBooks.class);
+        startActivity(toFindBook);
+    }
 
-        Toast justBurnt = Toast.makeText(this, resultSet.getString(1), Toast.LENGTH_SHORT);
-        justBurnt.show();
+    public void changeToAddBook(View view){
+        Intent toAddBook = new Intent(this, AddBook.class);
+        startActivity(toAddBook);
+    }
 
+    public void changeToCheckOut(View view){
+        Intent toCheckOut = new Intent(this, CheckOutBook.class);
+        startActivity(toCheckOut);
+    }
 
+    public void changeToCheckedOut(View view){
+        Intent toCheckedOut = new Intent(this, CheckedOutBooks.class);
+        startActivity(toCheckedOut);
     }
 }
