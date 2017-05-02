@@ -24,8 +24,6 @@ public class MainMenu extends AppCompatActivity {
 
         setContentView(R.layout.activity_main_menu);
 
-        this.deleteDatabase("Library");
-
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
 
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS BOOK(ISBN VARCHAR NOT NULL, TITLE VARCHAR NOT NULL," +

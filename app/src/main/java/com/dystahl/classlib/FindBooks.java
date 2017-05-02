@@ -50,8 +50,8 @@ public class FindBooks extends AppCompatActivity {
             StringBuilder outSetBuilder = new StringBuilder();
             ListView output = (ListView)findViewById(R.id.bookList);
             String searchTerm = ((TextView)findViewById(R.id.searchText)).getText().toString();
-            String query = "SELECT * FROM BOOK WHERE TITLE LIKE '%" + searchTerm + "%'" +
-                    "ORDER BY TITLE";
+            String query = "SELECT * FROM BOOK";// WHERE TITLE LIKE '%" + searchTerm + "%'" +
+                    //"ORDER BY TITLE";
 
             Cursor resultSet = libraryDB.rawQuery(query, null);
 
