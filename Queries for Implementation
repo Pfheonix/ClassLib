@@ -1,0 +1,122 @@
+USE ArchProject
+GO
+
+--ALTER TABLE BOOK
+--	ADD COUNT int
+--GO
+
+
+--Sort by title asc
+SELECT *
+	FROM BOOK
+	ORDER BY TITLE
+--Sort by title desc
+SELECT *
+	FROM BOOK
+	ORDER BY TITLE desc
+--Sort by author asc
+SELECT *
+	FROM BOOK
+	ORDER BY AUTHOR
+--Sort by author desc
+SELECT *
+	FROM BOOK
+	ORDER BY AUTHOR desc
+	
+--Checking to see if a book exists
+SELECT ISBN
+	FROM BOOK
+	WHERE ISBN = "isbn"
+	--Adding a new book (empty resultset)
+	INSERT INTO BOOK
+		VALUES ("isbn", "Title", "Author", "Binding", "Length", "Genre", "Count")
+	--Addding a copy
+	UPDATE BOOK
+		SET COUNT = COUNT + 1
+		WHERE ISBN = [isbn]
+
+--Book that are currently checked out by a student by 
+--by Title asc
+SELECT b.*, s.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+	ORDER BY b.TITLE
+--by Title desc
+SELECT b.*, s.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+	ORDER BY b.TITLE desc
+--by Author asc
+SELECT b.*, s.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+	ORDER BY b.AUTHOR
+--by Author desc
+SELECT b.*, s.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+	ORDER BY b.AUTHOR desc
+
+--Checking in a book
+DELETE FROM CHECKOUT
+	WHERE ID = [id] AND ISBN = [isbn]
+GO
+UPDATE BOOK
+	SET COUNT = COUNT + 1
+	WHERE ISBN = [isbn]
+
+--Checking Out a book -- check if student exists
+INSERT INTO CHECKOUT
+	VALUES("isbn", "id")
+GO 
+UPDATE BOOK
+	SET COUNT = COUNT - 1
+	WHERE ISBN = [isbn]
+	--Check if a Student is in database -- If result is empty, add new student
+	SELECT ID
+		FROM STUDENT
+		WHERE ID = "id"
+	--Adding a new student
+	INSERT INTO STUDENT
+		VALUES("id", "fname", "lname", "contact", "period")
+
+--Searching by Title asc
+SELECT * 
+	FROM BOOK
+	WHERE TITLE LIKE '%"searchkey"%'
+	ORDER BY TITLE
+
+--Searching by Author
+SELECT * 
+	FROM BOOK
+	WHERE AUTHOR LIKE '%"searchkey"%'
+	
+-- Students that currently have a book shecked out and the books that they have checked out
+--sort by last name asc
+SELECT s.*, b.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+		ORDER BY s.LNAME
+--sort by last name desc
+SELECT s.*, b.*
+	FROM CHECKOUT AS c
+		JOIN BOOK AS b
+		ON c.ISBN = b.ISBN
+		JOIN STUDENT AS s
+		ON c.ID = s.ID
+		ORDER BY s.LNAME desc
