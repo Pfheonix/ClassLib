@@ -6,4 +6,171 @@
     android:layout_height="match_parent"
     tools:context="com.dystahl.classlib.AddBook">
 
+    <EditText
+        android:id="@+id/isbnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/isbn"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/button" />
+
+    <EditText
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/isbnText"
+        android:layout_below="@+id/isbnText"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/title" />
+
+    <EditText
+        android:id="@+id/authorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/titleText"
+        android:layout_below="@+id/titleText"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/author" />
+
+    <EditText
+        android:id="@+id/bindingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/authorText"
+        android:layout_below="@+id/authorText"
+        android:layout_marginTop="31dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/binding" />
+
+    <EditText
+        android:id="@+id/lengthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bindingText"
+        android:layout_below="@+id/bindingText"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/length" />
+
+    <TextView
+        android:id="@+id/isbnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/titleText"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/isbnText"
+        android:layout_marginStart="38dp"
+        android:layout_toStartOf="@+id/isbnText"
+        android:paddingTop="8sp"
+        android:text="@string/isbn"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/isbnView"
+        android:layout_alignTop="@+id/titleText"
+        android:text="@string/title"
+        android:layout_above="@+id/authorText"
+        android:layout_toStartOf="@+id/titleText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/authorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/titleView"
+        android:layout_alignTop="@+id/authorText"
+        android:text="@string/author"
+        android:layout_above="@+id/bindingText"
+        android:layout_toStartOf="@+id/authorText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/bindingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/authorView"
+        android:text="@string/binding"
+        android:layout_above="@+id/lengthText"
+        android:layout_toStartOf="@+id/bindingText"
+        android:layout_alignTop="@+id/bindingText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/lengthView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bindingView"
+        android:layout_alignTop="@+id/lengthText"
+        android:text="@string/length"
+        android:layout_alignBottom="@+id/lengthText"
+        android:layout_toStartOf="@+id/lengthText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/genreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/lengthText"
+        android:layout_below="@+id/lengthText"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/genre" />
+
+    <TextView
+        android:id="@+id/genreView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lengthView"
+        android:layout_alignTop="@+id/genreText"
+        android:text="@string/genre"
+        android:layout_alignBottom="@+id/genreText"
+        android:layout_toStartOf="@+id/genreText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Book"
+        android:onClick="addBook"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/countView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/genreView"
+        android:layout_below="@+id/genreView"
+        android:text="@string/count"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/countText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/genreText"
+        android:layout_toEndOf="@+id/genreView"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/count" />
 </RelativeLayout>

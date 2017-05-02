@@ -1,16 +1,23 @@
 package com.dystahl.classlib;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class AddBook extends AppCompatActivity {
+
+    SQLiteDatabase libraryDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +31,66 @@ public class AddBook extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_book);
 
-        SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
+        libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
     }
 
     public void addBook(View view){
+        ArrayList<String> queryValues = new ArrayList<>();
+        StringBuilder notFound = new StringBuilder();
 
+        queryValues.add(((EditText)findViewById(R.id.isbnText)).getText().toString());
+        if(queryValues.get(0).isEmpty()){
+            notFound.append("ISBN");
+        }
+        queryValues.add(((EditText)findViewById(R.id.titleText)).getText().toString());
+        if(queryValues.get(1).isEmpty()){
+            notFound.append(", Title");
+        }
+        queryValues.add(((EditText)findViewById(R.id.authorText)).getText().toString());
+        if(queryValues.get(2).isEmpty()){
+            notFound.append(", Author");
+        }
+        queryValues.add(((EditText)findViewById(R.id.bindingText)).getText().toString());
+        if(queryValues.get(3).isEmpty()){
+            notFound.append(", Binding");
+        }
+        queryValues.add(((EditText)findViewById(R.id.lengthText)).getText().toString());
+        if(queryValues.get(4).isEmpty()){
+            notFound.append(", Length");
+        }
+        queryValues.add(((EditText)findViewById(R.id.genreText)).getText().toString());
+        if(queryValues.get(5).isEmpty()){
+            notFound.append(", Genre ");
+        }
+        queryValues.add(((EditText)findViewById(R.id.countText)).getText().toString());
+        if(queryValues.get(6).isEmpty()){
+            notFound.append(", Genre ");
+        }
+        if(notFound.length() > 0){
+            notFound.append("not found.");
+            Toast temp = Toast.makeText(this, notFound.toString(), Toast.LENGTH_LONG);
+            temp.show();
+        } else {
+            try {
+                Cursor resultSet = libraryDB.rawQuery("SELECT ISBN FROM BOOK WHERE ISBN = '" + queryValues.get(0) + "';", null);
+
+                if(resultSet != null){
+                    libraryDB.rawQuery("UPDATE BOOK SET COUNT = COUNT + 1 WHERE ISBN = " + queryValues.get(0) + ";",null);
+                    Toast temp = Toast.makeText(this, "Update completed", Toast.LENGTH_LONG);
+                    temp.show();
+                } else {
+                    libraryDB.rawQuery("INSERT INTO BOOK VALUES ('" + queryValues.get(0) + "', '"
+                            + queryValues.get(1) + "', '" + queryValues.get(2) + "', '" + queryValues.get(3) + "', '"
+                            + queryValues.get(4) + "', '" + queryValues.get(5) + "', '" + queryValues.get(6) + "');", null);
+
+                    Toast temp = Toast.makeText(this, "Insert completed", Toast.LENGTH_LONG);
+                    temp.show();
+                }
+            } catch (Exception ex){
+                Toast temp = Toast.makeText(this, "Query failed\n" + ex.getMessage(), Toast.LENGTH_LONG);
+                temp.show();
+            }
+        }
     }
 
 

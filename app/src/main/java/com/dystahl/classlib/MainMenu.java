@@ -24,10 +24,12 @@ public class MainMenu extends AppCompatActivity {
 
         setContentView(R.layout.activity_main_menu);
 
+        this.deleteDatabase("Library");
+
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
 
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS BOOK(ISBN VARCHAR NOT NULL, TITLE VARCHAR NOT NULL," +
-                " AUTHOR VARCHAR NOT NULL, BINDING VARCHAR, LENGTH INT, GENRE VARCHAR, PRIMARY KEY(ISBN) )");
+                " AUTHOR VARCHAR NOT NULL, BINDING VARCHAR, LENGTH INT, GENRE VARCHAR, COUNT INT, PRIMARY KEY(ISBN) )");
 
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS STUDENT(ID INT NOT NULL, FNAME VARCHAR NOT NULL," +
                 " LNAME VARCHAR NOT NULL, CONTACT VARCHAR NOT NULL, PERIOD INTEGER, PRIMARY KEY(ID))");

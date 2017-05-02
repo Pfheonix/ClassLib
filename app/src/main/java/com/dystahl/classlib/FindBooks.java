@@ -3,7 +3,6 @@ package com.dystahl.classlib;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
-import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
-import android.widget.CursorTreeAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +37,7 @@ public class FindBooks extends AppCompatActivity {
 
 
         ListView result =  (ListView)findViewById(R.id.bookList);
-        TextView input = (TextView)findViewById(R.id.editText);
+        TextView input = (TextView)findViewById(R.id.searchText);
 
 
     }
@@ -53,7 +49,7 @@ public class FindBooks extends AppCompatActivity {
             ArrayList<String> outSet = new ArrayList<>();
             StringBuilder outSetBuilder = new StringBuilder();
             ListView output = (ListView)findViewById(R.id.bookList);
-            String searchTerm = ((TextView)findViewById(R.id.editText)).getText().toString();
+            String searchTerm = ((TextView)findViewById(R.id.searchText)).getText().toString();
             String query = "SELECT * FROM BOOK WHERE TITLE LIKE '%" + searchTerm + "%'" +
                     "ORDER BY TITLE";
 
@@ -90,6 +86,10 @@ public class FindBooks extends AppCompatActivity {
             Toast temp = Toast.makeText(this,ex.toString(), Toast.LENGTH_LONG);
             temp.show();
         }
+    }
+
+    public void checkout(){
+
     }
 }
 

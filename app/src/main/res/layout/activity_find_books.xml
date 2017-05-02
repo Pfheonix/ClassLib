@@ -7,7 +7,7 @@
     tools:context="com.dystahl.classlib.FindBooks">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/searchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -22,7 +22,7 @@
         android:id="@+id/SearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/searchText"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:onClick="searchExec"
@@ -35,4 +35,22 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"/>
+
+    <EditText
+        android:id="@+id/isbnPut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/isbn"
+        android:layout_alignBottom="@+id/checkout"
+        android:layout_alignStart="@+id/searchText" />
+
+    <Button
+        android:id="@+id/checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/SearchButton"
+        android:layout_below="@+id/SearchButton"
+        android:text="@string/checkout" />
 </RelativeLayout>
