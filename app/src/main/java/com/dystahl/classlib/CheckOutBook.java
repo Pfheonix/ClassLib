@@ -18,7 +18,7 @@ public class CheckOutBook extends AppCompatActivity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_find_books);
+        setContentView(R.layout.activity_check_out_book);
 
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
     }
