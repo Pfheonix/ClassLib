@@ -1,5 +1,6 @@
 package com.dystahl.classlib;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -124,11 +125,21 @@ public class CheckedOutBooks extends AppCompatActivity {
 
         try(SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null)){
             if((libraryDB.delete("CHECKOUT", "ISBN = '" + ISBN + "' AND ID = '" + ID + "'", null)) > 0){
-                Toast temp = Toast.makeText(this, "Delete might have worked?", Toast.LENGTH_LONG);
+
+                ContentValues countVal = new ContentValues();
+
+                String[] isbn = {"COUNT"};
+                Cursor resultSet = libraryDB.query("BOOK", isbn, "ISBN = '" + ISBN + "'",  null, null, null, null, null);
+                resultSet.moveToFirst();
+                countVal.put("COUNT", resultSet.getInt(resultSet.getColumnIndexOrThrow("COUNT")) + 1);
+                libraryDB.update("BOOK", countVal, "ISBN = '" + ISBN + "'", null);
+
+                Toast temp = Toast.makeText(this, "Book returned.", Toast.LENGTH_LONG);
                 temp.show();
+                resultSet.close();
                 this.searchExec(view);
             } else {
-                Toast temp = Toast.makeText(this, "Delete didn't work.", Toast.LENGTH_LONG);
+                Toast temp = Toast.makeText(this, "Book would not fit in... the... digital shelf?", Toast.LENGTH_LONG);
                 temp.show();
             }
         } catch (Exception ex){

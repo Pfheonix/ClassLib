@@ -100,11 +100,19 @@ public class CheckOutBook extends AppCompatActivity {
         } else {
             try {
                 libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
-                String[] isbn = {"ISBN"};
-                Cursor resultSet = libraryDB.query(false, "BOOK", isbn, queryValues.get(0),  null, null, null, null, null);
+                ContentValues countVal = new ContentValues();
+
+                String[] isbn = {"ISBN", "COUNT"};
+                Cursor resultSet = libraryDB.query("BOOK", isbn, "ISBN = '" + queryValues.get(0) + "'",  null, null, null, null, null);
+
+                resultSet.moveToFirst();
+
+                countVal.put("COUNT", Integer.parseInt(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT"))));
 
                 String[] id = {"ID"};
-                Cursor resultSet2 = libraryDB.query(false, "STUDENT", id, queryValues.get(1), null, null, null, null, null);
+                Cursor resultSet2 = libraryDB.query("STUDENT", id, "ID = '" + queryValues.get(1) + "'", null, null, null, null, null);
+
+                resultSet2.moveToFirst();
 
                 ContentValues checkOutData = new ContentValues();
 
@@ -113,8 +121,8 @@ public class CheckOutBook extends AppCompatActivity {
 
                 //If the resultSets exist, use them. If resultSet2 doesn't have anything in it, add the student
                 //They don't exist yet in the DB.
-                if (resultSet != null) {
-                    if (resultSet2 != null && resultSet2.getCount() == 0) {
+                if (resultSet.getCount() > 0) {
+                    if (resultSet2.getCount() == 0) {
                         if(libraryDB.insertOrThrow("STUDENT", null, studentData) == -1){
                             Toast temp = Toast.makeText(this, "Insert didn't throw, but failed.", Toast.LENGTH_LONG);
                             temp.show();
@@ -123,12 +131,20 @@ public class CheckOutBook extends AppCompatActivity {
                             temp.show();
                         }
                     }
-                    //Inserting to CHECKOUT table, and giving user feedback on completion of checkout.
-                    libraryDB.insertOrThrow("CHECKOUT", null, checkOutData);
-                    Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by " + queryValues.get(2) + " " +queryValues.get(3), Toast.LENGTH_LONG);
-                    temp.show();
-                    resultSet.close();
-                    if(resultSet2 != null){
+                    if(countVal.getAsInteger("COUNT") == 0){
+                        Toast temp = Toast.makeText(this, "There are no more copies available!", Toast.LENGTH_LONG);
+                        temp.show();
+                    } else {
+                        //Inserting to CHECKOUT table, and giving user feedback on completion of checkout.
+                        int count = countVal.getAsInteger("COUNT");
+                        --count;
+                        countVal.remove("COUNT");
+                        countVal.put("COUNT", count);
+                        libraryDB.insertOrThrow("CHECKOUT", null, checkOutData);
+                        libraryDB.update("BOOK", countVal, "ISBN = '" + queryValues.get(0) + "'", null);
+                        Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by " + queryValues.get(2) + " " + queryValues.get(3), Toast.LENGTH_LONG);
+                        temp.show();
+                        resultSet.close();
                         resultSet2.close();
                     }
                 } else {

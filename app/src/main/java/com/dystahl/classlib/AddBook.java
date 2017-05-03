@@ -89,8 +89,13 @@ public class AddBook extends AppCompatActivity {
                     ContentValues countVal = new ContentValues();
                     countVal.put("COUNT", Integer.parseInt(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT"))) + 1);
                     libraryDB.update("BOOK", countVal, "ISBN = '" + queryValues.get("ISBN") + "'", null);
-                    Toast temp = Toast.makeText(this, resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")), Toast.LENGTH_LONG);
+                    Toast temp = Toast.makeText(this, "Now " + resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")) + " of " + queryValues.get("ISBN"), Toast.LENGTH_LONG);
                     temp.show();
+                    ((EditText)findViewById(R.id.isbnText)).getText().clear();
+                    ((EditText)findViewById(R.id.titleText)).getText().clear();
+                    ((EditText)findViewById(R.id.authorText)).getText().clear();
+                    ((EditText)findViewById(R.id.bindingText)).getText().clear();
+                    ((EditText)findViewById(R.id.genreText)).getText().clear();
                     resultSet.close();
                     libraryDB.close();
                 } else {
