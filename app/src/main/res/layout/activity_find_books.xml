@@ -52,5 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/SearchButton"
         android:layout_below="@+id/SearchButton"
-        android:text="@string/checkout" />
+        android:text="@string/checkout"
+        android:onClick="checkout"/>
 </RelativeLayout>

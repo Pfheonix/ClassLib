@@ -101,9 +101,9 @@ public class FindBooks extends AppCompatActivity {
         }
     }
 
-    public void checkout(){
-        ((EditText)findViewById(R.id.isbnText)).setText(((EditText)findViewById(R.id.isbnPut)).getText());
+    public void checkout(View view){
         Intent toCheckOut = new Intent(this, CheckOutBook.class);
+        toCheckOut.putExtra("ISBN",((EditText)findViewById(R.id.isbnPut)).getText().toString());
         startActivity(toCheckOut);
     }
 }

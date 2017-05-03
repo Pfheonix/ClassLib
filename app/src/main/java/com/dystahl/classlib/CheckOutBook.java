@@ -1,6 +1,7 @@
 package com.dystahl.classlib;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,16 @@ public class CheckOutBook extends AppCompatActivity {
 
         setContentView(R.layout.activity_check_out_book);
 
+        Intent fromPrevious = getIntent();
+        String ISBN;
+
+        if(fromPrevious != null){
+            ISBN = fromPrevious.getExtras().getString("ISBN");
+            if(ISBN != null){
+                ((EditText)findViewById(R.id.isbnCheckoutText)).setText(ISBN);
+            }
+        }
+
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
     }
 
@@ -36,7 +47,7 @@ public class CheckOutBook extends AppCompatActivity {
         ArrayList<String> queryValues = new ArrayList<>();
         StringBuilder notFound = new StringBuilder();
 
-        queryValues.add(((EditText) findViewById(R.id.isbnText)).getText().toString());
+        queryValues.add(((EditText) findViewById(R.id.isbnCheckoutText)).getText().toString());
         if (queryValues.get(0).isEmpty()) {
             notFound.append("ISBN");
         }
