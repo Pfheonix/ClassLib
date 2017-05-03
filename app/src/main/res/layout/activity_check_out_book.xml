@@ -6,4 +6,152 @@
     android:layout_height="match_parent"
     tools:context="com.dystahl.classlib.CheckOutBook">
 
+
+    <EditText
+        android:id="@+id/isbnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/isbn"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/button" />
+
+    <EditText
+        android:id="@+id/studentIDText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/isbnText"
+        android:layout_below="@+id/isbnText"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/student_id" />
+
+    <EditText
+        android:id="@+id/fnameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/studentIDText"
+        android:layout_below="@+id/studentIDText"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/fname" />
+
+    <EditText
+        android:id="@+id/lnameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/fnameText"
+        android:layout_below="@+id/fnameText"
+        android:layout_marginTop="31dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/lname" />
+
+    <EditText
+        android:id="@+id/contactText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/lnameText"
+        android:layout_below="@+id/lnameText"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/contact" />
+
+    <TextView
+        android:id="@+id/isbnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/studentIDText"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/isbnText"
+        android:layout_marginStart="38dp"
+        android:layout_toStartOf="@+id/isbnText"
+        android:paddingTop="8sp"
+        android:text="@string/isbn"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/studentIDView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/isbnView"
+        android:layout_alignTop="@+id/studentIDText"
+        android:text="@string/student_id"
+        android:layout_above="@+id/fnameText"
+        android:layout_toStartOf="@+id/studentIDText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/fnameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/studentIDView"
+        android:layout_alignTop="@+id/fnameText"
+        android:text="@string/fname"
+        android:layout_above="@+id/lnameText"
+        android:layout_toStartOf="@+id/fnameText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/lnameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/fnameView"
+        android:text="@string/lname"
+        android:layout_above="@+id/contactText"
+        android:layout_toStartOf="@+id/lnameText"
+        android:layout_alignTop="@+id/lnameText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/contactView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lnameView"
+        android:layout_alignTop="@+id/contactText"
+        android:text="@string/contact"
+        android:layout_alignBottom="@+id/contactText"
+        android:layout_toStartOf="@+id/contactText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/periodText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/contactText"
+        android:layout_below="@+id/contactText"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/period" />
+
+    <TextView
+        android:id="@+id/periodView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/contactView"
+        android:layout_alignTop="@+id/periodText"
+        android:text="@string/period"
+        android:layout_alignBottom="@+id/periodText"
+        android:layout_toStartOf="@+id/periodText"
+        android:paddingTop="8sp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Out"
+        android:onClick="checkOut"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
 </RelativeLayout>

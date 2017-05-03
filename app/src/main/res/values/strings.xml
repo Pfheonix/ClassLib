@@ -8,4 +8,9 @@
     <string name="genre">Genre</string>
     <string name="count">Count</string>
     <string name="checkout">Checkout</string>
+    <string name="student_id">Student ID</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="contact">Contact</string>
+    <string name="period">Period</string>
 </resources>
