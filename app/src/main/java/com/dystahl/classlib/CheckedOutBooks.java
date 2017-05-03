@@ -120,12 +120,9 @@ public class CheckedOutBooks extends AppCompatActivity {
         ISBN = ((EditText)findViewById(R.id.isbnCheckinText)).getText().toString();
         ID = ((EditText)findViewById(R.id.studentIDCheckinText)).getText().toString();
 
-        Toast well = Toast.makeText(this, "In checkIn", Toast.LENGTH_SHORT);
-        well.show();
-
         try(SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null)){
             if((libraryDB.delete("CHECKOUT", "ISBN = '" + ISBN + "' AND ID = '" + ID + "'", null)) > 0){
-
+                //Update count to reflect turned in book
                 ContentValues countVal = new ContentValues();
 
                 String[] isbn = {"COUNT"};
