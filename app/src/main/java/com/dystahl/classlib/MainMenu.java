@@ -35,19 +35,6 @@ public class MainMenu extends AppCompatActivity {
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS CHECKOUT( ISBN VARCHAR NOT NULL, ID INT NOT NULL, PRIMARY KEY (ISBN, ID)," +
                 "FOREIGN KEY(ISBN) REFERENCES BOOK, FOREIGN KEY(ID) REFERENCES STUDENT)");
 
-        //String[] studentData = {"FNAME", "LNAME"};
-        Cursor studentInfo = libraryDB.query("STUDENT", null, null, null, null, null, null, null);
-
-        if(studentInfo != null && studentInfo.getCount() > 0){
-            studentInfo.moveToFirst();
-            Toast temp = Toast.makeText(this, studentInfo.getString(studentInfo.getColumnIndex("FNAME")), Toast.LENGTH_SHORT);
-            temp.show();
-            studentInfo.close();
-        } else {
-            Toast temp = Toast.makeText(this, "No information in Student corresponding to 900720372.", Toast.LENGTH_SHORT);
-            temp.show();
-        }
-
 
     }
 
