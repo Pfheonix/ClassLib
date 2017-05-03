@@ -73,11 +73,18 @@ public class AddBook extends AppCompatActivity {
             temp.show();
         } else {
             try {
-                Cursor resultSet = libraryDB.rawQuery("SELECT ISBN FROM BOOK WHERE ISBN = '" + queryValues.get("ISBN") + "';", null);
+                //Cursor resultSet = libraryDB.rawQuery("SELECT * FROM BOOK WHERE ISBN = '" + queryValues.get("ISBN") + "';", null);
+                String[] count = {"COUNT"};
+                Cursor resultSet = libraryDB.query("BOOK", count, "ISBN = '"+ queryValues.get("ISBN") + "'", null, null, null, null, null);
+
 
                 if(resultSet != null && resultSet.getCount() > 0){
-                    libraryDB.rawQuery("UPDATE BOOK SET COUNT = COUNT + 1 WHERE ISBN = " + queryValues.get("ISBN") + ";",null);
-                    Toast temp = Toast.makeText(this, "Update completed", Toast.LENGTH_LONG);
+                    resultSet.moveToFirst();
+                    ContentValues countVal = new ContentValues();
+                    countVal.put("COUNT", Integer.parseInt(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT"))) + 1);
+                    //libraryDB.rawQuery("UPDATE BOOK SET COUNT = COUNT + 1 WHERE ISBN = " + queryValues.get("ISBN") + ";",null);
+                    libraryDB.update("BOOK", countVal, "ISBN = '" + queryValues.get("ISBN") + "'", null);
+                    Toast temp = Toast.makeText(this, resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")), Toast.LENGTH_LONG);
                     temp.show();
                     resultSet.close();
                 } else {

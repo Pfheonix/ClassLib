@@ -12,9 +12,12 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/isbn"
+        android:hint="@string/isbn"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignStart="@+id/button"
+        android:layout_marginTop="10dp"
+        android:text=""
+        />
 
     <EditText
         android:id="@+id/titleText"
@@ -22,10 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/isbnText"
         android:layout_below="@+id/isbnText"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/title" />
+        android:hint="@string/title"
+        android:text=""/>
 
     <EditText
         android:id="@+id/authorText"
@@ -33,10 +37,11 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/titleText"
         android:layout_below="@+id/titleText"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/author" />
+        android:hint="@string/author"
+        android:text=""/>
 
     <EditText
         android:id="@+id/bindingText"
@@ -44,10 +49,10 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/authorText"
         android:layout_below="@+id/authorText"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/binding" />
+        android:hint="@string/binding" />
 
     <EditText
         android:id="@+id/lengthText"
@@ -55,10 +60,11 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/bindingText"
         android:layout_below="@+id/bindingText"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
-        android:text="0" />
+        android:hint="0"
+        android:text="0"/>
 
     <TextView
         android:id="@+id/isbnView"
@@ -67,7 +73,7 @@
         android:layout_above="@+id/titleText"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/isbnText"
-        android:layout_marginStart="38dp"
+        android:layout_marginStart="20dp"
         android:layout_toStartOf="@+id/isbnText"
         android:paddingTop="8sp"
         android:text="@string/isbn"
@@ -130,7 +136,8 @@
         android:layout_marginTop="25dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/genre" />
+        android:hint="@string/genre"
+        android:text=""/>
 
     <TextView
         android:id="@+id/genreView"
@@ -169,9 +176,11 @@
         android:id="@+id/countText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/genreText"
-        android:layout_toEndOf="@+id/genreView"
         android:ems="10"
         android:inputType="number"
-        android:text="1" />
+        android:hint="1"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/genreText"
+        android:layout_alignStart="@+id/button"
+        android:text="1"/>
 </RelativeLayout>
