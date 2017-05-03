@@ -35,7 +35,7 @@
         android:layout_marginTop="21dp"
         android:ems="10"
         android:inputType="number"
-        android:text="@string/default_stud_id"/>
+        android:hint="@string/default_stud_id"/>
 
     <Button
         android:id="@+id/button2"

@@ -137,7 +137,6 @@ public class CheckedOutBooks extends AppCompatActivity {
     }
 
     public void contact (View view){
-        String title = getResources().getString(R.string.sendReminder);
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
 
         ArrayList<String> isbnList = new ArrayList<>();
