@@ -26,7 +26,8 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="number"
-        android:text="" />
+        android:text=""
+        android:hint="900000000"/>
 
     <EditText
         android:id="@+id/fnameText"
@@ -58,8 +59,8 @@
         android:layout_below="@+id/lnameText"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/contact" />
+        android:inputType="textWebEmailAddress"
+        android:hint="@string/contactemail" />
 
     <TextView
         android:id="@+id/isbnView"
@@ -130,8 +131,9 @@
         android:layout_below="@+id/contactText"
         android:layout_marginTop="25dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/period" />
+        android:inputType="number"
+        android:hint="@string/default_zero"
+        android:text="@string/default_zero"/>
 
     <TextView
         android:id="@+id/periodView"

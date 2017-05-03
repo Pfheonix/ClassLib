@@ -23,8 +23,6 @@ import java.util.ArrayList;
 
 public class FindBooks extends AppCompatActivity {
 
-    SQLiteDatabase libraryDB;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +107,7 @@ public class FindBooks extends AppCompatActivity {
 }
 
 class BookCursorAdapter extends CursorAdapter {
-    public LayoutInflater cursorInflater;
+    private LayoutInflater cursorInflater;
 
     public BookCursorAdapter(Context context, Cursor c, int flags){
         super(context, c, flags);

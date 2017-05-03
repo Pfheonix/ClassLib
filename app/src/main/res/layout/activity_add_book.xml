@@ -63,8 +63,8 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
-        android:hint="0"
-        android:text="0"/>
+        android:hint="@string/default_zero"
+        android:text="@string/default_zero"/>
 
     <TextView
         android:id="@+id/isbnView"

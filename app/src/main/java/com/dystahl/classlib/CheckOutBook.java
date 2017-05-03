@@ -1,7 +1,9 @@
 package com.dystahl.classlib;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +30,15 @@ public class CheckOutBook extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_check_out_book);
+
+        Intent input = this.getIntent();
+        String ISBN;
+        if(input.getExtras() != null){
+            ISBN = input.getExtras().getString("ISBN");
+            if(ISBN != null){
+                ((EditText)findViewById(R.id.isbnCheckoutText)).setText(ISBN);
+            }
+        }
     }
 
     public void checkOut(View view) {
@@ -43,31 +54,31 @@ public class CheckOutBook extends AppCompatActivity {
         if (queryValues.get(1).isEmpty()) {
             notFound.append(", Student ID");
         } else {
-            studentData.put("ID", queryValues.get(1));
+            studentData.put("ID", Integer.parseInt(queryValues.get(1)));
         }
         queryValues.add(((EditText) findViewById(R.id.fnameText)).getText().toString());
         if (queryValues.get(2).isEmpty()) {
-            notFound.append(", Author");
+            notFound.append(", First Name");
         } else {
-            studentData.put("ID", queryValues.get(2));
+            studentData.put("FNAME", queryValues.get(2));
         }
         queryValues.add(((EditText) findViewById(R.id.lnameText)).getText().toString());
         if (queryValues.get(3).isEmpty()) {
-            notFound.append(", Binding");
+            notFound.append(", Last Name");
         } else {
-            studentData.put("ID", queryValues.get(3));
+            studentData.put("LNAME", queryValues.get(3));
         }
         queryValues.add(((EditText) findViewById(R.id.contactText)).getText().toString());
         if (queryValues.get(4).isEmpty()) {
-            notFound.append(", Length");
+            notFound.append(", Contact");
         } else {
-            studentData.put("ID", queryValues.get(4));
+            studentData.put("CONTACT", queryValues.get(4));
         }
         queryValues.add(((EditText) findViewById(R.id.periodText)).getText().toString());
         if (queryValues.get(5).isEmpty()) {
-            notFound.append(", Genre ");
+            notFound.append(", Period ");
         }  else {
-            studentData.put("ID", queryValues.get(5));
+            studentData.put("PERIOD", Integer.parseInt(queryValues.get(5)));
         }
 
         if (notFound.length() > 0) {
@@ -83,25 +94,35 @@ public class CheckOutBook extends AppCompatActivity {
                 String[] id = {"ID"};
                 Cursor resultSet2 = libraryDB.query(false, "STUDENT", id, queryValues.get(1), null, null, null, null, null);
 
+                ContentValues checkOutData = new ContentValues();
 
-                ContentValues checkOutdata = new ContentValues();
-                checkOutdata.put("ISBN", queryValues.get(0)); checkOutdata.put("ID", queryValues.get(1));
+                checkOutData.put("ISBN", queryValues.get(0));
+                checkOutData.put("ID", queryValues.get(1));
+
                 if (resultSet != null) {
-                    if (resultSet2 == null) {
-                        libraryDB.insert("STUDENT", null, studentData);
+                    if (resultSet2 != null && resultSet2.getCount() == 0) {
+                        if(libraryDB.insertOrThrow("STUDENT", null, studentData) == -1){
+                            Toast temp = Toast.makeText(this, "Insert didn't throw, but failed.", Toast.LENGTH_LONG);
+                            temp.show();
+                        } else {
+                            Toast temp = Toast.makeText(this, "Insert seems to have succeeded.", Toast.LENGTH_LONG);
+                            temp.show();
+                        }
                     }
-                    libraryDB.insert("CHECKOUT", null, checkOutdata);
+                    libraryDB.insertOrThrow("CHECKOUT", null, checkOutData);
                     Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by student " + queryValues.get(1), Toast.LENGTH_LONG);
                     temp.show();
                     resultSet.close();
-                    resultSet2.close();
+                    if(resultSet2 != null){
+                        resultSet2.close();
+                    }
                 } else {
                     Toast temp = Toast.makeText(this, "Sorry, that book does not exist in the database.", Toast.LENGTH_LONG);
                     temp.show();
-//                    if (resultSet2 == null) {
-//
-//                    }
                 }
+            } catch (SQLiteConstraintException sqlex) {
+                Toast temp = Toast.makeText(this, "Student already has book checked out!", Toast.LENGTH_LONG);
+                temp.show();
             } catch (Exception ex) {
                 Toast temp = Toast.makeText(this, "Query failed\n" + ex.getMessage(), Toast.LENGTH_LONG);
                 temp.show();
