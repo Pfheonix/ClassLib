@@ -25,8 +25,8 @@
         android:layout_below="@+id/isbnCheckoutText"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/student_id" />
+        android:inputType="number"
+        android:text="" />
 
     <EditText
         android:id="@+id/fnameText"

@@ -1,7 +1,6 @@
 package com.dystahl.classlib;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -29,23 +28,12 @@ public class CheckOutBook extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_check_out_book);
-
-        Intent fromPrevious = getIntent();
-        String ISBN;
-
-        if(fromPrevious != null){
-            ISBN = fromPrevious.getExtras().getString("ISBN");
-            if(ISBN != null){
-                ((EditText)findViewById(R.id.isbnCheckoutText)).setText(ISBN);
-            }
-        }
-
-        SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
     }
 
     public void checkOut(View view) {
         ArrayList<String> queryValues = new ArrayList<>();
         StringBuilder notFound = new StringBuilder();
+        ContentValues studentData = new ContentValues();
 
         queryValues.add(((EditText) findViewById(R.id.isbnCheckoutText)).getText().toString());
         if (queryValues.get(0).isEmpty()) {
@@ -53,23 +41,33 @@ public class CheckOutBook extends AppCompatActivity {
         }
         queryValues.add(((EditText) findViewById(R.id.studentIDText)).getText().toString());
         if (queryValues.get(1).isEmpty()) {
-            notFound.append(", Title");
+            notFound.append(", Student ID");
+        } else {
+            studentData.put("ID", queryValues.get(1));
         }
         queryValues.add(((EditText) findViewById(R.id.fnameText)).getText().toString());
         if (queryValues.get(2).isEmpty()) {
             notFound.append(", Author");
+        } else {
+            studentData.put("ID", queryValues.get(2));
         }
         queryValues.add(((EditText) findViewById(R.id.lnameText)).getText().toString());
         if (queryValues.get(3).isEmpty()) {
             notFound.append(", Binding");
+        } else {
+            studentData.put("ID", queryValues.get(3));
         }
         queryValues.add(((EditText) findViewById(R.id.contactText)).getText().toString());
         if (queryValues.get(4).isEmpty()) {
             notFound.append(", Length");
+        } else {
+            studentData.put("ID", queryValues.get(4));
         }
         queryValues.add(((EditText) findViewById(R.id.periodText)).getText().toString());
         if (queryValues.get(5).isEmpty()) {
             notFound.append(", Genre ");
+        }  else {
+            studentData.put("ID", queryValues.get(5));
         }
 
         if (notFound.length() > 0) {
@@ -78,25 +76,28 @@ public class CheckOutBook extends AppCompatActivity {
             temp.show();
         } else {
             try {
+                libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
                 String[] isbn = {"ISBN"};
-                Cursor resultSet = libraryDB.query(true, "BOOK", isbn, queryValues.get(0),  null, null, null, null, null);
+                Cursor resultSet = libraryDB.query(false, "BOOK", isbn, queryValues.get(0),  null, null, null, null, null);
 
                 String[] id = {"ID"};
-                Cursor resultSet2 = libraryDB.query(true, "Student", id, queryValues.get(1), null, null, null, null, null);
+                Cursor resultSet2 = libraryDB.query(false, "STUDENT", id, queryValues.get(1), null, null, null, null, null);
 
 
-                ContentValues data = new ContentValues();
-                data.put("ISBN", queryValues.get(0)); data.put("ID", queryValues.get(1));
-                if (resultSet != null && resultSet2 != null) {
-                    libraryDB.insert("CHECKOUT", null, data);
+                ContentValues checkOutdata = new ContentValues();
+                checkOutdata.put("ISBN", queryValues.get(0)); checkOutdata.put("ID", queryValues.get(1));
+                if (resultSet != null) {
+                    if (resultSet2 == null) {
+                        libraryDB.insert("STUDENT", null, studentData);
+                    }
+                    libraryDB.insert("CHECKOUT", null, checkOutdata);
                     Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by student " + queryValues.get(1), Toast.LENGTH_LONG);
                     temp.show();
                     resultSet.close();
+                    resultSet2.close();
                 } else {
-                    if (resultSet == null) {
-                        Toast temp = Toast.makeText(this, "Sorry, that book does not exist in the database.", Toast.LENGTH_LONG);
-                        temp.show();
-                    }
+                    Toast temp = Toast.makeText(this, "Sorry, that book does not exist in the database.", Toast.LENGTH_LONG);
+                    temp.show();
 //                    if (resultSet2 == null) {
 //
 //                    }
