@@ -49,10 +49,16 @@ public class CheckOutBook extends AppCompatActivity {
         queryValues.add(((EditText) findViewById(R.id.isbnCheckoutText)).getText().toString());
         if (queryValues.get(0).isEmpty()) {
             notFound.append("ISBN");
+            Toast temp = Toast.makeText(this, "Please enter ISBN.", Toast.LENGTH_LONG);
+            temp.show();
+            return;
         }
         queryValues.add(((EditText) findViewById(R.id.studentIDText)).getText().toString());
         if (queryValues.get(1).isEmpty()) {
             notFound.append(", Student ID");
+            Toast temp = Toast.makeText(this, "Please enter Student ID number.", Toast.LENGTH_LONG);
+            temp.show();
+            return;
         } else {
             studentData.put("ID", Integer.parseInt(queryValues.get(1)));
         }
@@ -105,7 +111,7 @@ public class CheckOutBook extends AppCompatActivity {
                             Toast temp = Toast.makeText(this, "Insert didn't throw, but failed.", Toast.LENGTH_LONG);
                             temp.show();
                         } else {
-                            Toast temp = Toast.makeText(this, "Insert seems to have succeeded.", Toast.LENGTH_LONG);
+                            Toast temp = Toast.makeText(this, "New Student INSERTed to table.", Toast.LENGTH_LONG);
                             temp.show();
                         }
                     }
