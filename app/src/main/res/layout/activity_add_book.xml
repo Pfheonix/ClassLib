@@ -57,8 +57,8 @@
         android:layout_below="@+id/bindingText"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/length" />
+        android:inputType="number"
+        android:text="0" />
 
     <TextView
         android:id="@+id/isbnView"
@@ -158,11 +158,12 @@
         android:id="@+id/countView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/genreView"
-        android:layout_below="@+id/genreView"
         android:text="@string/count"
         android:paddingTop="8sp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/countText"
+        android:layout_alignBottom="@+id/countText"
+        android:layout_alignStart="@+id/genreView" />
 
     <EditText
         android:id="@+id/countText"
@@ -171,6 +172,6 @@
         android:layout_below="@+id/genreText"
         android:layout_toEndOf="@+id/genreView"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/count" />
+        android:inputType="number"
+        android:text="1" />
 </RelativeLayout>

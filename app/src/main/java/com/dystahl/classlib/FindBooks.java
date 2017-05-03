@@ -65,6 +65,13 @@ public class FindBooks extends AppCompatActivity {
                 outSetBuilder.append(resultSet.getString(resultSet.getColumnIndexOrThrow("BINDING")));
                 outSetBuilder.append(" -- ");
                 outSetBuilder.append(resultSet.getString(resultSet.getColumnIndexOrThrow("ISBN")));
+                outSetBuilder.append(" -- ");
+                outSetBuilder.append(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")));
+                if(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")).equals("1")){
+                    outSetBuilder.append(" copy.");
+                } else {
+                    outSetBuilder.append(" copies.");
+                }
                 outSet.add(outSetBuilder.toString());
                 outSetBuilder.delete(0, outSetBuilder.length());
             }while(resultSet.moveToNext());
@@ -74,7 +81,7 @@ public class FindBooks extends AppCompatActivity {
             output.setAdapter(bookAdapter);
 
         } catch (CursorIndexOutOfBoundsException cex){
-            Toast temp = Toast.makeText(this,"Empty Database, Please Insert Books to Find Books", Toast.LENGTH_LONG);
+            Toast temp = Toast.makeText(this,"Empty Table, Please Insert Books to Find Books", Toast.LENGTH_LONG);
             temp.show();
         } catch (IllegalArgumentException ex){
             Toast temp = Toast.makeText(this,"Invalid Column Name", Toast.LENGTH_LONG);
