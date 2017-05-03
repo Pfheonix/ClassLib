@@ -36,10 +36,6 @@ public class FindBooks extends AppCompatActivity {
         setContentView(R.layout.activity_find_books);
 
 
-        ListView result =  (ListView)findViewById(R.id.bookList);
-        TextView input = (TextView)findViewById(R.id.searchText);
-
-
     }
 
     public void searchExec(View view){
@@ -50,8 +46,6 @@ public class FindBooks extends AppCompatActivity {
             StringBuilder outSetBuilder = new StringBuilder();
             ListView output = (ListView)findViewById(R.id.bookList);
             String searchTerm = ((TextView)findViewById(R.id.searchText)).getText().toString();
-            //String query = "SELECT * FROM BOOK WHERE TITLE LIKE '%" + searchTerm + "%'" +
-            //       "ORDER BY TITLE";
 
             String[] columns = {"TITLE", "AUTHOR", "BINDING", "ISBN", "COUNT"};
 
@@ -70,9 +64,9 @@ public class FindBooks extends AppCompatActivity {
                 outSetBuilder.append(" -- ");
                 outSetBuilder.append(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")));
                 if(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")).equals("1")){
-                    outSetBuilder.append(" copy.");
+                    outSetBuilder.append(" copy in.");
                 } else {
-                    outSetBuilder.append(" copies.");
+                    outSetBuilder.append(" copies in.");
                 }
                 outSet.add(outSetBuilder.toString());
                 outSetBuilder.delete(0, outSetBuilder.length());
@@ -103,26 +97,5 @@ public class FindBooks extends AppCompatActivity {
         Intent toCheckOut = new Intent(this, CheckOutBook.class);
         toCheckOut.putExtra("ISBN",((EditText)findViewById(R.id.isbnPut)).getText().toString());
         startActivity(toCheckOut);
-    }
-}
-
-class BookCursorAdapter extends CursorAdapter {
-    private LayoutInflater cursorInflater;
-
-    public BookCursorAdapter(Context context, Cursor c, int flags){
-        super(context, c, flags);
-        cursorInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.book_list_item, parent, false);
-    }
-
-    public void bindView(View view, Context context, Cursor cursor) {
-        TextView title = (TextView) view.findViewById(R.id.book_title);
-        TextView author = (TextView) view.findViewById(R.id.book_author);
-
-        title.setText(cursor.getString(cursor.getColumnIndexOrThrow("title")));
-        author.setText(cursor.getString(cursor.getColumnIndexOrThrow("author")));
     }
 }
