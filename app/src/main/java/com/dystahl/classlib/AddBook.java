@@ -73,7 +73,6 @@ public class AddBook extends AppCompatActivity {
             temp.show();
         } else {
             try {
-                //Cursor resultSet = libraryDB.rawQuery("SELECT * FROM BOOK WHERE ISBN = '" + queryValues.get("ISBN") + "';", null);
                 String[] count = {"COUNT"};
                 Cursor resultSet = libraryDB.query("BOOK", count, "ISBN = '"+ queryValues.get("ISBN") + "'", null, null, null, null, null);
 
@@ -82,16 +81,11 @@ public class AddBook extends AppCompatActivity {
                     resultSet.moveToFirst();
                     ContentValues countVal = new ContentValues();
                     countVal.put("COUNT", Integer.parseInt(resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT"))) + 1);
-                    //libraryDB.rawQuery("UPDATE BOOK SET COUNT = COUNT + 1 WHERE ISBN = " + queryValues.get("ISBN") + ";",null);
                     libraryDB.update("BOOK", countVal, "ISBN = '" + queryValues.get("ISBN") + "'", null);
                     Toast temp = Toast.makeText(this, resultSet.getString(resultSet.getColumnIndexOrThrow("COUNT")), Toast.LENGTH_LONG);
                     temp.show();
                     resultSet.close();
                 } else {
-                    //libraryDB.rawQuery("INSERT INTO BOOK VALUES ('" + queryValues.get(0) + "', '"
-                    //       + queryValues.get(1) + "', '" + queryValues.get(2) + "', '" + queryValues.get(3) + "', "
-                    //        + queryValues.get(4) + ", '" + queryValues.get(5) + "', " + queryValues.get(6) + ");", null);
-
                     libraryDB.insertOrThrow("BOOK", null, queryValues);
                     Toast temp = Toast.makeText(this, "Insert completed", Toast.LENGTH_LONG);
                     temp.show();
@@ -102,72 +96,5 @@ public class AddBook extends AppCompatActivity {
             }
         }
     }
-
-
-
-    /*//Big brother clusterfuck of CSV parsing. It knows that lines are ended by \n, but it has to wait a bit
-    //For that.
-    public void parseWinnerCSV(){
-        BufferedReader toRead = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.turingwinners)));
-        StringBuilder remedy = new StringBuilder();
-
-        try {
-            int next = toRead.read();
-            while (next != -1){
-                if(remedy.length() > 0) {
-                    remedy.delete(0, remedy.length());
-                }
-                while(next != ','){
-                    remedy.append((char)next);
-                    next = toRead.read();
-                }
-
-                Fname.add(remedy.toString());
-                remedy.delete(0, remedy.length());
-                next = toRead.read();
-
-                while(next != ','){
-                    remedy.append((char)next);
-                    next = toRead.read();
-                }
-
-                Minitial.add(remedy.toString());
-                remedy.delete(0, remedy.length());
-                next = toRead.read();
-
-                while(next != ','){
-                    remedy.append((char)next);
-                    next = toRead.read();
-                }
-
-                Lname.add(remedy.toString());
-                remedy.delete(0, remedy.length());
-                next = toRead.read();
-
-                while(next != ','){
-                    remedy.append((char)next);
-                    next = toRead.read();
-                }
-
-                AlmaMater.add(remedy.toString());
-                remedy.delete(0, remedy.length());
-                next = toRead.read();
-
-                while(next != ',') {
-                    remedy.append((char)next);
-                    next = toRead.read();
-
-                }
-
-                living.add(remedy.toString());
-                remedy.delete(0, remedy.length());
-
-                awardYear.add(Integer.parseInt(toRead.readLine()));
-                next = toRead.read();
-            }
-        } catch (IOException iex){
-            Toast.makeText(this, "IOException during winner toRead.read. Fucked. Up.", Toast.LENGTH_LONG);
-        }
-    }*/
 }
 
