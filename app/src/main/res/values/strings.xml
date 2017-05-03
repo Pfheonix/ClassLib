@@ -13,4 +13,5 @@
     <string name="lname">Last Name</string>
     <string name="contact">Contact</string>
     <string name="period">Period</string>
+    <string name="default_stud_id">900000000</string>
 </resources>
