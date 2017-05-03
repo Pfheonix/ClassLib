@@ -27,17 +27,23 @@ public class FindBooks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Set custom title
+        try { this.getSupportActionBar().setTitle("Search for Books");
+        } catch (NullPointerException ex){
+            Toast trouble = Toast.makeText(null, "Search for Books", Toast.LENGTH_LONG);
+            trouble.show();
+        }
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         setContentView(R.layout.activity_find_books);
 
 
     }
 
+    //Method searches for books in the database by portions of titles.
     public void searchExec(View view){
         try {
             SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
@@ -49,10 +55,12 @@ public class FindBooks extends AppCompatActivity {
 
             String[] columns = {"TITLE", "AUTHOR", "BINDING", "ISBN", "COUNT"};
 
+            //Requesting all above columns where the Title matches part of the search term.
             Cursor resultSet = libraryDB.query("BOOK", columns, "TITLE LIKE '%" + searchTerm + "%'", null, null, null,  "TITLE", null);
 
             resultSet.moveToFirst();
 
+            //Setting up Strings for the ListView
             do{
                 outSetBuilder.append(resultSet.getString(resultSet.getColumnIndexOrThrow("TITLE")));
                 outSetBuilder.append(" by ");
@@ -78,6 +86,7 @@ public class FindBooks extends AppCompatActivity {
             ArrayAdapter<String> bookAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, outSet);
             output.setAdapter(bookAdapter);
 
+        //Playing catch with all of the exceptions possible. Just in case.
         } catch (CursorIndexOutOfBoundsException cex){
             Toast temp = Toast.makeText(this,"Empty Table, Please Insert Books to Find Books\nAlternatively, Are You Using a Title/Title Fragment?", Toast.LENGTH_LONG);
             temp.show();
@@ -93,6 +102,7 @@ public class FindBooks extends AppCompatActivity {
         }
     }
 
+    //Throw the ISBN in the ISBN EditText to the Checkout activity, then switch.
     public void checkout(View view){
         Intent toCheckOut = new Intent(this, CheckOutBook.class);
         toCheckOut.putExtra("ISBN",((EditText)findViewById(R.id.isbnPut)).getText().toString());

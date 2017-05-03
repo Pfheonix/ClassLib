@@ -23,8 +23,11 @@ public class CheckOutBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try { this.getSupportActionBar().setTitle("Check Out Books");
+        } catch (NullPointerException ex){
+            Toast trouble = Toast.makeText(null, "Check Out Books", Toast.LENGTH_LONG);
+            trouble.show();
+        }
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -39,8 +42,11 @@ public class CheckOutBook extends AppCompatActivity {
                 ((EditText)findViewById(R.id.isbnCheckoutText)).setText(ISBN);
             }
         }
+
+
     }
 
+    //Method for adding books to CHECKOUT table
     public void checkOut(View view) {
         ArrayList<String> queryValues = new ArrayList<>();
         StringBuilder notFound = new StringBuilder();
@@ -105,6 +111,8 @@ public class CheckOutBook extends AppCompatActivity {
                 checkOutData.put("ISBN", queryValues.get(0));
                 checkOutData.put("ID", queryValues.get(1));
 
+                //If the resultSets exist, use them. If resultSet2 doesn't have anything in it, add the student
+                //They don't exist yet in the DB.
                 if (resultSet != null) {
                     if (resultSet2 != null && resultSet2.getCount() == 0) {
                         if(libraryDB.insertOrThrow("STUDENT", null, studentData) == -1){
@@ -115,8 +123,9 @@ public class CheckOutBook extends AppCompatActivity {
                             temp.show();
                         }
                     }
+                    //Inserting to CHECKOUT table, and giving user feedback on completion of checkout.
                     libraryDB.insertOrThrow("CHECKOUT", null, checkOutData);
-                    Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by student " + queryValues.get(1), Toast.LENGTH_LONG);
+                    Toast temp = Toast.makeText(this, "Book " + queryValues.get(0) + " checked out by " + queryValues.get(2) + " " +queryValues.get(3), Toast.LENGTH_LONG);
                     temp.show();
                     resultSet.close();
                     if(resultSet2 != null){

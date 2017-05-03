@@ -23,8 +23,12 @@ public class CheckedOutBooks extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        try { this.getSupportActionBar().setTitle("All Checked Out Books");
+        } catch (NullPointerException ex){
+            Toast trouble = Toast.makeText(null, "All Checked Out Books", Toast.LENGTH_LONG);
+            trouble.show();
+        }
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -47,9 +51,6 @@ public class CheckedOutBooks extends AppCompatActivity {
             Cursor resultSet = libraryDB.query("CHECKOUT", columns, null, null, null, null,  "ID", null);
 
             resultSet.moveToFirst();
-
-            Toast justBurnt = Toast.makeText(this, resultSet.getString(0), Toast.LENGTH_LONG);
-            justBurnt.show();
 
             do {
                 String isbn = resultSet.getString(resultSet.getColumnIndexOrThrow("ISBN"));

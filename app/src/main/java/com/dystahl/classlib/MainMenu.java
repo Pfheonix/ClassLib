@@ -26,6 +26,7 @@ public class MainMenu extends AppCompatActivity {
 
         SQLiteDatabase libraryDB = openOrCreateDatabase("Library", MODE_PRIVATE, null);
 
+        //If the database isn't complete, complete it.
         libraryDB.execSQL("CREATE TABLE IF NOT EXISTS BOOK(ISBN VARCHAR NOT NULL, TITLE VARCHAR NOT NULL," +
                 " AUTHOR VARCHAR NOT NULL, BINDING VARCHAR, LENGTH INT, GENRE VARCHAR, COUNT INT, PRIMARY KEY(ISBN) )");
 
@@ -38,21 +39,25 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    //Change to FindBooks Activity
     public void changeToFindBooks(View view){
         Intent toFindBook = new Intent(this, FindBooks.class);
         startActivity(toFindBook);
     }
 
+    //Change to AddBook activity
     public void changeToAddBook(View view){
         Intent toAddBook = new Intent(this, AddBook.class);
         startActivity(toAddBook);
     }
 
+    //Change to CheckOut activity
     public void changeToCheckOut(View view){
         Intent toCheckOut = new Intent(this, CheckOutBook.class);
         startActivity(toCheckOut);
     }
 
+    //Change to CheckedOutBooks activity
     public void changeToCheckedOut(View view){
         Intent toCheckedOut = new Intent(this, CheckedOutBooks.class);
         startActivity(toCheckedOut);
